@@ -240,6 +240,14 @@ public class TestBigQueryConnectorTest
 
     @Test
     @Override
+    public void testCreateTableAsSelectSchemaNotFound()
+    {
+        assertThatThrownBy(super::testCreateTableAsSelectSchemaNotFound)
+                .hasStackTraceContaining("This connector does not support creating tables with data");
+    }
+
+    @Test
+    @Override
     public void testCreateTableAsSelectWithUnicode()
     {
         assertThatThrownBy(super::testCreateTableAsSelectWithUnicode)

@@ -277,6 +277,22 @@ public abstract class AbstractKuduConnectorTest
 
     @Test
     @Override
+    public void testCreateTableSchemaNotFound()
+    {
+        String schemaName = "test_schema_" + randomTableSuffix();
+        String tableName = "test_create_no_schema_" + randomTableSuffix();
+        try {
+            assertQueryFails(
+                    format("CREATE TABLE %s.%s (id bigint) WITH (partition_by_hash_columns = ARRAY['id'])", schemaName, tableName),
+                    format("Schema %s not found", schemaName));
+        }
+        finally {
+            assertUpdate(format("DROP TABLE IF EXISTS %s.%s", schemaName, tableName));
+        }
+    }
+
+    @Test
+    @Override
     public void testAddColumn()
     {
         // TODO Support these test once kudu connector can create tables with default partitions
